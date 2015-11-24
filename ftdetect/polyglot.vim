@@ -205,7 +205,7 @@ au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.c
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
   
-au BufRead,BufNewFile *.cl set filetype=opencl
+au! BufRead,BufNewFile *.cl set filetype=opencl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
   
