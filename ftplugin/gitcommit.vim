@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim filetype plugin
 " Language:	git commit file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
-" Last Change:	2012 April 7
+" Last Change:	2013 May 30
 
 " Only do this when not done yet for this buffer
 if (exists("b:did_ftplugin"))
@@ -13,7 +13,8 @@ endif
 runtime! ftplugin/git.vim
 let b:did_ftplugin = 1
 
-setlocal nomodeline tabstop=8 formatoptions-=croq formatoptions+=tl textwidth=72
+setlocal nomodeline tabstop=8 formatoptions+=tl textwidth=72
+setlocal formatoptions-=c formatoptions-=r formatoptions-=o formatoptions-=q
 let b:undo_ftplugin = 'setl modeline< tabstop< formatoptions< tw<'
 
 if exists("g:no_gitcommit_commands") || v:version < 700

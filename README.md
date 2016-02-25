@@ -26,7 +26,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
-- [blade](https://github.com/xsbeats/vim-blade) (syntax, indent, ftdetect)
+- [blade](https://github.com/xsbeats/vim-blade) (syntax, indent, ftplugin, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
 - [cjsx](https://github.com/mtscout6/vim-cjsx) (ftdetect, syntax, ftplugin)
@@ -50,10 +50,10 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
-- [javascript](https://github.com/sheerun/yajs.vim) (syntax, indent)
+- [javascript](https://github.com/khornberg/yajs.vim) (syntax, indent)
 - [json](https://github.com/sheerun/vim-json) (syntax, indent, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
-- [jsx](https://github.com/mxw/vim-jsx) (after)
+- [jsx](https://github.com/mxw/vim-jsx) (ftdetect, after)
 - [julia](https://github.com/dcjones/julia-minimalist-vim) (syntax, indent, ftdetect)
 - [kotlin](https://github.com/udalov/kotlin-vim) (syntax, indent, ftdetect)
 - [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)

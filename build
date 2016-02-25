@@ -121,7 +121,7 @@ PACKS="
   html5:othree/html5.vim
   jade:digitaltoad/vim-jade
   jasmine:glanotte/vim-jasmine
-  javascript:sheerun/yajs.vim
+  javascript:khornberg/yajs.vim
   json:sheerun/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL

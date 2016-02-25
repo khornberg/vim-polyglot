@@ -39,19 +39,23 @@ syn match   cCustomParen    "(" contains=cParen contains=cCppParen
 syn match   cCustomFunc     "\w\+\s*(\@=" contains=cCustomParen
 hi def link cCustomFunc  Function
 
-" Template functions
-if exists('g:cpp_experimental_template_highlight') && g:cpp_experimental_template_highlight
-    syn region  cCustomAngleBrackets matchgroup=AngleBracketContents start="\v%(<operator\_s*)@<!%(%(\_i|template\_s*)@<=\<[<=]@!|\<@<!\<[[:space:]<=]@!)" end='>' contains=@cppSTLgroup,cppStructure,cType,cCustomClass,cCustomAngleBrackets,cNumbers
-    syn match   cCustomBrack    "<\|>" contains=cCustomAngleBrackets
-    syn match   cCustomTemplateFunc "\w\+\s*<.*>(\@=" contains=cCustomBrack,cCustomAngleBrackets
-    hi def link cCustomTemplateFunc  Function
-endif
-
 " Class and namespace scope
 if exists('g:cpp_class_scope_highlight') && g:cpp_class_scope_highlight
     syn match    cCustomScope    "::"
     syn match    cCustomClass    "\w\+\s*::" contains=cCustomScope
     hi def link cCustomClass Function  " disabled for now
+endif
+
+" Template functions
+if exists('g:cpp_experimental_template_highlight') && g:cpp_experimental_template_highlight
+    syn region  cCustomAngleBrackets matchgroup=AngleBracketContents start="\v%(<operator\_s*)@<!%(%(\_i|template\_s*)@<=\<[<=]@!|\<@<!\<[[:space:]<=]@!)" end='>' contains=@cppSTLgroup,cppStructure,cType,cCustomClass,cCustomAngleBrackets,cNumbers
+    syn match   cCustomBrack    "<\|>" contains=cCustomAngleBrackets
+
+    syn match   cCustomTemplateClass    "\w\{-,1}\s\{-}<[^:]\{-}>\(::\)\@=\(\w*(\)\@!" contains=cCustomScope,cCustomAngleBrackets
+    hi def link cCustomTemplateClass  cCustomClass
+
+    syn match   cCustomTemplateFunc "\(\(::\)\@<=\w\+\s*<.\{-}>\|\( \)\@<=\w\+\s*<[^:]\{-}>\)(\@=" contains=cCustomBrack 
+    hi def link cCustomTemplateFunc  cCustomFunc
 endif
 
 " Alternative syntax that is used in:
@@ -136,7 +140,6 @@ syntax keyword cppSTLfunctional binary_negate
 syntax keyword cppSTLfunctional bit_and
 syntax keyword cppSTLfunctional bit_not
 syntax keyword cppSTLfunctional bit_or
-syntax keyword cppSTLfunctional bit_xor
 syntax keyword cppSTLfunctional divides
 syntax keyword cppSTLfunctional equal_to
 syntax keyword cppSTLfunctional greater

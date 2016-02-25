@@ -1,5 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
   
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
+
 " Vim syntax file
 " Language:     JavaScript
 " Maintainer:   Kao Wei-Ko(othree) <othree@gmail.com>
@@ -7,8 +9,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') ==
 " Version:      1.5
 " Changes:      Go to https://github.com/othree/yajs.vim for recent changes.
 " Origin:       https://github.com/jelera/vim-javascript-syntax
-" Credits:      Jose Elera Campana, Zhao Yi, Claudio Fleiner, Scott Shattuck 
-"               (This file is based on their hard work), gumnos (From the #vim 
+" Credits:      Jose Elera Campana, Zhao Yi, Claudio Fleiner, Scott Shattuck
+"               (This file is based on their hard work), gumnos (From the #vim
 "               IRC Channel in Freenode)
 
 
@@ -134,10 +136,10 @@ syntax cluster javascriptStatement             contains=javascriptBlock,javascri
 
 "Syntax in the JavaScript code
 " syntax match   javascriptASCII                 contained /\\\d\d\d/
-syntax region  javascriptTemplateSubstitution  contained matchgroup=javascriptTemplateSB start=/\${/ end=/}/ contains=javascriptTemplateSBlock,javascriptTemplateSString 
+syntax region  javascriptTemplateSubstitution  contained matchgroup=javascriptTemplateSB start=/\${/ end=/}/ contains=javascriptTemplateSBlock,javascriptTemplateSString
 syntax region  javascriptTemplateSBlock        contained start=/{/ end=/}/ contains=javascriptTemplateSBlock,javascriptTemplateSString transparent
 syntax region  javascriptTemplateSString       contained start=/\z(["']\)/  skip=/\\\\\|\\\z1\|\\\n/  end=/\z1\|$/ extend contains=javascriptTemplateSStringRB transparent
-syntax match   javascriptTemplateSStringRB     /}/ contained 
+syntax match   javascriptTemplateSStringRB     /}/ contained
 syntax region  javascriptString                start=/\z(["']\)/  skip=/\\\\\|\\\z1\|\\\n/  end=/\z1\|$/ nextgroup=@javascriptSymbols skipwhite skipempty
 syntax region  javascriptTemplate              start=/`/  skip=/\\\\\|\\`\|\n/  end=/`\|$/ contains=javascriptTemplateSubstitution nextgroup=@javascriptSymbols skipwhite skipempty
 " syntax match   javascriptTemplateTag           /\k\+/ nextgroup=javascriptTemplate
@@ -195,7 +197,7 @@ syntax keyword javascriptExceptions            catch throw finally
 syntax keyword javascriptDebugger              debugger
 
 syntax match   javascriptProp                  contained /[a-zA-Z_$][a-zA-Z0-9_$]*/ contains=@props,@_semantic transparent nextgroup=@javascriptAfterIdentifier
-syntax match   javascriptMethod                contained /[a-zA-Z_$][a-zA-Z0-9_$]*\ze(/ contains=@props transparent nextgroup=javascriptFuncCallArg
+syntax match   javascriptMethod                contained /[a-zA-Z_$][a-zA-Z0-9_$]*\ze(/ contains=@props  nextgroup=javascriptFuncCallArg
 syntax match   javascriptDotNotation           /\./ nextgroup=javascriptProp,javascriptMethod
 syntax match   javascriptDotStyleNotation      /\.style\./ nextgroup=javascriptDOMStyle transparent
 
@@ -223,7 +225,7 @@ runtime syntax/yajs/event.vim
 syntax region  javascriptEventString           contained start=/\z(["']\)/  skip=/\\\\\|\\\z1\|\\\n/  end=/\z1\|$/ contains=javascriptASCII,@events
 
 "Import
-syntax region  javascriptImportDef             start=/import/ end=/;\|\n/ contains=javascriptImport,javascriptString,javascriptEndColons
+syntax region  javascriptImportDef             start=/import/ end=/;\|\n/ contains=javascriptImport,javascriptString
 syntax keyword javascriptImport                contained from as import
 syntax keyword javascriptExport                export module
 
@@ -237,13 +239,15 @@ syntax keyword javascriptMethodAccessorWords   contained get set
 syntax region  javascriptMethodName            contained matchgroup=javascriptPropertyName start=/\[/ end=/]/ contains=@javascriptValue nextgroup=javascriptMethodArgs skipwhite skipempty
 
 syntax keyword javascriptAsyncFuncKeyword      async await
-" syntax keyword javascriptFuncKeyword           function nextgroup=javascriptFuncName,javascriptFuncArg skipwhite
+syntax keyword javascriptFuncKeyword           function nextgroup=javascriptFuncName,javascriptFuncArg skipwhite
 syntax keyword javascriptFuncKeyword           function nextgroup=javascriptAsyncFunc,javascriptSyncFunc
 syntax match   javascriptSyncFunc              contained // nextgroup=javascriptFuncName,javascriptFuncArg skipwhite skipempty
 syntax match   javascriptAsyncFunc             contained /\s*\*\s*/ nextgroup=javascriptFuncName,javascriptFuncArg skipwhite skipempty
 syntax match   javascriptFuncName              contained /[a-zA-Z_$]\k*/ nextgroup=javascriptFuncArg skipwhite
-syntax match   javascriptFuncArg               contained /(\_[^()]*)/ contains=javascriptParens,javascriptFuncKeyword,javascriptFuncComma nextgroup=javascriptBlock skipwhite skipwhite skipempty
+syntax match   javascriptFuncArg               contained /(\_[^()]*)/ contains=javascriptParens,javascriptFuncKeyword,javascriptFuncComma,javascriptFuncEquals nextgroup=javascriptBlock skipwhite skipwhite skipempty
 syntax match   javascriptFuncComma             contained /,/
+syntax match   javascriptFuncEquals            contained /=/ contains=javascriptFuncDefaultArg nextgroup=javascriptFuncDefaultArg skipwhite skipempty
+syntax match   javascriptFuncDefaultArg        contained /[a-zA-Z_$]*/ contains=javascriptNull,javascriptString,javascriptBoolean,javascriptNumber skipwhite skipempty
 
 
 "Class
@@ -267,11 +271,11 @@ syntax region  javascriptObjectLiteral         contained matchgroup=javascriptBr
 " syntax match   javascriptBraces                /[\[\]]/
 syntax match   javascriptParens                /[()]/
 " syntax match   javascriptOpSymbols             /[^+\-*/%\^=!<>&|?]\@<=\(<\|>\|<=\|>=\|==\|!=\|===\|!==\|+\|-\|*\|%\|++\|--\|<<\|>>\|>>>\|&\||\|^\|!\|\~\|&&\|||\|?\|=\|+=\|-=\|*=\|%=\|<<=\|>>=\|>>>=\|&=\||=\|^=\|\/\|\/=\)\ze\_[^+\-*/%\^=!<>&|?]/ nextgroup=@javascriptExpression skipwhite
-" syntax match   javascriptInvalidOp            contained /[+\-*/%\^=!<>&|?:]\+/ 
+" syntax match   javascriptInvalidOp            contained /[+\-*/%\^=!<>&|?:]\+/
 syntax match   javascriptOpSymbol              contained /\(<\|>\|<=\|>=\|==\|!=\|===\|!==\|+\|*\|%\|++\|--\|<<\|>>\|>>>\|&\||\|^\|!\|\~\|&&\|||\|?\|=\|+=\|-=\|*=\|%=\|<<=\|>>=\|>>>=\|&=\||=\|^=\|\/\|\/=\)\ze\_[^+\-*/%\^=!<>&|?:]/ nextgroup=javascriptInvalidOp skipwhite skipempty
 syn region  htmlScriptTag     contained start=+<script+ end=+>+ fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent
 syntax match   javascriptWOpSymbols            contained /\_s\+/ nextgroup=javascriptOpSymbols
-syntax match   javascriptEndColons             /[;,]/
+" syntax match   javascriptEndColons             /[;,]/
 syntax match   javascriptLogicSymbols          /[^&|]\@<=\(&&\|||\)\ze\_[^&|]/ nextgroup=@javascriptExpression skipwhite skipempty
 syntax cluster javascriptSymbols               contains=javascriptOpSymbols,javascriptLogicSymbols
 syntax match   javascriptWSymbols              contained /\_s\+/ nextgroup=@javascriptSymbols
@@ -284,7 +288,7 @@ syntax region  javascriptParenExp              matchgroup=javascriptParens start
 syntax cluster javascriptExpression            contains=javascriptArrowFuncDef,javascriptParenExp,@javascriptValue,javascriptObjectLiteral,javascriptFuncKeyword,javascriptYield,javascriptIdentifierName,javascriptRegexpString,@javascriptTypes,@javascriptOps,javascriptGlobal,jsxRegion
 syntax cluster javascriptEventExpression       contains=javascriptArrowFuncDef,javascriptParenExp,@javascriptValue,javascriptObjectLiteral,javascriptFuncKeyword,javascriptIdentifierName,javascriptRegexpString,@javascriptEventTypes,@javascriptOps,javascriptGlobal,jsxRegion
 
-syntax region  javascriptLoopParen             contained matchgroup=javascriptParens start=/(/ end=/)/ contains=javascriptVariable,javascriptForOperator,javascriptEndColons,@javascriptExpression nextgroup=javascriptBlock skipwhite skipempty
+syntax region  javascriptLoopParen             contained matchgroup=javascriptParens start=/(/ end=/)/ contains=javascriptVariable,javascriptForOperator,@javascriptExpression nextgroup=javascriptBlock skipwhite skipempty
 
 " syntax match   javascriptFuncCall              contained /[a-zA-Z]\k*\ze(/ nextgroup=javascriptFuncCallArg
 syntax region  javascriptFuncCallArg           contained matchgroup=javascriptParens start=/(/ end=/)/ contains=@javascriptExpression,@javascriptComments nextgroup=@javascriptAfterIdentifier
@@ -300,10 +304,11 @@ syntax match   javascriptArrowFuncArg          contained /[a-zA-Z_$]\k*/
 runtime syntax/semhl.vim
 
 if exists("did_javascript_hilink")
-  HiLink javascriptEndColons            Exception
-  HiLink javascriptOpSymbols            Normal
-  HiLink javascriptLogicSymbols         Boolean
-  HiLink javascriptBraces               Function
+
+  " HiLink javascriptEndColons            Exception
+  " HiLink javascriptOpSymbols            Normal
+  " HiLink javascriptLogicSymbols         Boolean
+  " HiLink javascriptBraces               Function
   HiLink javascriptParens               Normal
   HiLink javascriptComment              Comment
   HiLink javascriptLineComment          Comment
@@ -355,7 +360,7 @@ if exists("did_javascript_hilink")
   HiLink javascriptObjectLabel          javascriptLabel
   HiLink javascriptLabel                Label
   HiLink javascriptPropertyName         Label
-  HiLink javascriptImport               Special
+  " HiLink javascriptImport               Special
   HiLink javascriptExport               Special
   HiLink javascriptTry                  Special
   HiLink javascriptExceptions           Special
@@ -371,6 +376,8 @@ if exists("did_javascript_hilink")
   HiLink javascriptFuncArg              Special
   HiLink javascriptArrowFuncArg         javascriptFuncArg
   HiLink javascriptFuncComma            Operator
+  HiLink javascriptFuncEquals           Operator
+
 
   HiLink javascriptClassKeyword         Keyword
   HiLink javascriptClassExtends         Keyword
@@ -392,5 +399,7 @@ if main_syntax == 'javascript'
   unlet main_syntax
 endif
 
+
+endif
 
 endif

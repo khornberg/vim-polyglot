@@ -4,7 +4,7 @@ au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
   
-au BufNewFile,BufRead *.blade.php set filetype=blade
+autocmd BufNewFile,BufRead *.blade.php set filetype=blade
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cjsx') == -1
   
@@ -40,19 +40,18 @@ au BufNewFile,BufRead Dockerfile set filetype=dockerfile
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
   
-au BufRead,BufNewFile *.eex set filetype=eelixir
-au FileType eelixir setl sw=2 sts=2 et iskeyword+=!,?
-endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
-au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
-au FileType elixir setl sw=2 sts=2 et iskeyword+=!,?
-function! s:DetectElixir()
-    if getline(1) =~ '^#!.*\<elixir\>'
-        set filetype=elixir
-    endif
+au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
+au BufRead,BufNewFile *.eex call s:setf('eelixir')
+au FileType elixir,eelixir setl sw=2 sts=2 et iskeyword+=!,?
+au BufNewFile,BufRead * call s:DetectElixir()
+function! s:setf(filetype) abort
+  let &filetype = a:filetype
 endfunction
-autocmd BufNewFile,BufRead * call s:DetectElixir()
+function! s:DetectElixir()
+  if getline(1) =~ '^#!.*\<elixir\>'
+    call s:setf('elixir')
+  endif
+endfunction
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') == -1
   
@@ -97,19 +96,22 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
   
 let s:current_fileformats = ''
 let s:current_fileencodings = ''
-function! s:gofiletype_pre()
+function! s:gofiletype_pre(type)
     let s:current_fileformats = &g:fileformats
     let s:current_fileencodings = &g:fileencodings
     set fileencodings=utf-8 fileformats=unix
-    setlocal filetype=go
+    let &l:filetype = a:type
 endfunction
 function! s:gofiletype_post()
     let &g:fileformats = s:current_fileformats
     let &g:fileencodings = s:current_fileencodings
 endfunction
 au BufNewFile *.go setfiletype go | setlocal fileencoding=utf-8 fileformat=unix
-au BufRead *.go call s:gofiletype_pre()
+au BufRead *.go call s:gofiletype_pre("go")
 au BufReadPost *.go call s:gofiletype_post()
+au BufNewFile *.s setfiletype asm | setlocal fileencoding=utf-8 fileformat=unix
+au BufRead *.s call s:gofiletype_pre("asm")
+au BufReadPost *.s call s:gofiletype_post()
 au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
@@ -126,13 +128,33 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haxe') == -1
   
 autocmd BufNewFile,BufRead *.hx setf haxe
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
-  
-autocmd BufNewFile,BufReadPost *.jade set filetype=jade
-endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   
 autocmd BufNewFile,BufRead *Spec.js,*_spec.js set filetype=jasmine.javascript syntax=jasmine
+endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
+  
+if !exists('g:jsx_ext_required')
+  let g:jsx_ext_required = 1
+endif
+if !exists('g:jsx_pragma_required')
+  let g:jsx_pragma_required = 0
+endif
+if g:jsx_pragma_required
+  " Look for the @jsx pragma.  It must be included in a docblock comment before
+  " anything else in the file (except whitespace).
+  let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
+  let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
+endif
+fu! <SID>EnableJSX()
+  if g:jsx_pragma_required && !b:jsx_pragma_found | return 0 | endif
+  if g:jsx_ext_required && !exists('b:jsx_ext_found') | return 0 | endif
+  return 1
+endfu
+autocmd BufNewFile,BufRead *.jsx let b:jsx_ext_found = 1
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd BufNewFile,BufRead *.js
+  \ if <SID>EnableJSX() | set filetype=javascript.jsx | endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
   
@@ -251,6 +273,11 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
   
 au BufNewFile,BufRead   *.ps1xml   set ft=ps1xml
+endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
+  
+autocmd BufNewFile,BufReadPost *.pug set filetype=pug
+autocmd BufNewFile,BufReadPost *.jade set filetype=pug
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
   
