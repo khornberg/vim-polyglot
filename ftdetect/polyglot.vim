@@ -713,17 +713,10 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
-" python-compiler:aliev/vim-compiler-python
-" Vim compiler file
-" Compiler:	Unit testing tool for Python
-" Maintainer:	Ali Aliev <ali@aliev.me>
-" Last Change: 2015 Nov 2
-
-autocmd FileType python compiler python
-augroup END
-
-augroup filetypedetect
 " qml:peterhoeg/vim-qml
+" ftdetect/qml.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
+
 autocmd BufRead,BufNewFile *.qml setfiletype qml
 augroup END
 
@@ -966,7 +959,7 @@ augroup filetypedetect
 " Tim Harper (tim.theenchanter.com)
 
 " Force filetype to be textile even if already set
-" This will override the system ftplugin/changelog 
+" This will override the system ftplugin/changelog
 " set on some distros
 au BufRead,BufNewFile *.textile set filetype=textile
 augroup END

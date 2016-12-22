@@ -176,8 +176,7 @@ PACKS="
   pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
   purescript:raichoo/purescript-vim
-  python:mitsuhiko/vim-python-combined
-  python-compiler:aliev/vim-compiler-python
+  python:khornberg/Python-Syntax
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
   racket:wlangstroth/vim-racket

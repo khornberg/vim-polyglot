@@ -105,7 +105,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin)
 - [purescript](https://github.com/raichoo/purescript-vim) (syntax, indent, ftplugin)
 - [python-compiler](https://github.com/aliev/vim-compiler-python) (compiler, autoload)
-- [python](https://github.com/mitsuhiko/vim-python-combined) (syntax, indent)
+- [python](https://github.com/khornberg/Python-Syntax) (syntax)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
 - [racket](https://github.com/wlangstroth/vim-racket) (syntax, indent, autoload, ftplugin)
