@@ -709,14 +709,11 @@ au FileType purescript let &l:commentstring='{--%s--}'
 augroup END
 
 augroup filetypedetect
-" python:mitsuhiko/vim-python-combined
+" python:khornberg/Python-Syntax
 augroup END
 
 augroup filetypedetect
 " qml:peterhoeg/vim-qml
-" ftdetect/qml.vim
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
-
 autocmd BufRead,BufNewFile *.qml setfiletype qml
 augroup END
 
@@ -959,7 +956,7 @@ augroup filetypedetect
 " Tim Harper (tim.theenchanter.com)
 
 " Force filetype to be textile even if already set
-" This will override the system ftplugin/changelog
+" This will override the system ftplugin/changelog 
 " set on some distros
 au BufRead,BufNewFile *.textile set filetype=textile
 augroup END

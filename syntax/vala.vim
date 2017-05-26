@@ -160,7 +160,6 @@ endif
 exec "syn sync ccomment valaComment minlines=" . b:vala_minlines
 
 " code folding
-set foldmethod=syntax
 syn region valaBlock			start="{" end="}" transparent fold
 
 " The default highlighting.

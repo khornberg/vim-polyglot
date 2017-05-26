@@ -68,7 +68,7 @@ syntax region plantumlLabel start=/\[/ms=s+1 end=/\]/me=s-1 contained contains=p
 syntax match plantumlText /\%([0-9A-Za-zÀ-ÿ]\|\s\|[\.,;_-]\)\+/ contained
 
 " Class
-syntax region plantumlClass start=/\%(class\s[^{]\+\)\@<=\zs{/ end=/^\s*}/ contains=plantumlClassArrows,
+syntax region plantumlClass start=/\%(\%(class\|interface\|object\)\s[^{]\+\)\@<=\zs{/ end=/^\s*}/ contains=plantumlClassArrows,
 \                                                                                  plantumlClassKeyword,
 \                                                                                  @plantumlClassOp,
 \                                                                                  plantumlClassSeparator,
@@ -101,6 +101,7 @@ syntax match plantumlStereotype /<<.\{-1,}>>/ contains=plantumlSpecialString
 " Activity diagram
 syntax match plantumlActivityThing /([^)]*)/
 syntax match plantumlActivitySynch /===[^=]\+===/
+syntax match plantumlActivityLabel /\%(^\%(#\S\+\)\?\)\@<=:\_[^;|<>/\]}]\+[;|<>/\]}]$/ contains=plantumlSpecialString
 
 " Sequence diagram
 syntax match plantumlSequenceDivider /^\s*==[^=]\+==\s*$/
@@ -300,6 +301,7 @@ highlight default link plantumlMultilineComment Comment
 highlight default link plantumlColonLine Comment
 highlight default link plantumlActivityThing Type
 highlight default link plantumlActivitySynch Type
+highlight default link plantumlActivityLabel String
 highlight default link plantumlSkinparamKeyword Identifier
 highlight default link plantumlUsecaseActor String
 highlight default link plantumlStereotype Type

@@ -205,16 +205,28 @@ syn region pythonUniRawString   start=+[uU][rR]'''+ end=+'''+ keepend contains=p
 syn match  pythonUniRawEscape       "\([^\\]\(\\\\\)*\)\@<=\\u\x\{4}" display contained
 syn match  pythonUniRawEscapeError  "\([^\\]\(\\\\\)*\)\@<=\\u\x\{,3}\X" display contained
 
+" Format strings
+syn region pythonFormatString  start=+[fF]'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=pythonRawEscape,@Spell
+syn region pythonFormatString  start=+[fF]"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=pythonRawEscape,@Spell
+syn region pythonFormatString  start=+[fF]"""+ end=+"""+ keepend contains=pythonDocTest2,pythonSpaceError,@Spell
+syn region pythonFormatString  start=+[fF]'''+ end=+'''+ keepend contains=pythonDocTest,pythonSpaceError,@Spell
+"
+" Raw Format strings
+syn region pythonFormatRawString   start=+[fF][rR]'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=pythonRawEscape,pythonUniRawEscape,pythonUniRawEscapeError,@Spell
+syn region pythonFormatRawString   start=+[fF][rR]"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=pythonRawEscape,pythonUniRawEscape,pythonUniRawEscapeError,@Spell
+syn region pythonFormatRawString   start=+[fF][rR]"""+ end=+"""+ keepend contains=pythonUniRawEscape,pythonUniRawEscapeError,pythonDocTest2,pythonSpaceError,@Spell
+syn region pythonFormatRawString   start=+[fF][rR]'''+ end=+'''+ keepend contains=pythonUniRawEscape,pythonUniRawEscapeError,pythonDocTest,pythonSpaceError,@Spell
+
 if exists("python_highlight_string_formatting") && python_highlight_string_formatting != 0
   " String formatting
-  syn match pythonStrFormatting "%\(([^)]\+)\)\=[-#0 +]*\d*\(\.\d\+\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
-  syn match pythonStrFormatting "%[-#0 +]*\(\*\|\d\+\)\=\(\.\(\*\|\d\+\)\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+  syn match pythonStrFormatting "%\(([^)]\+)\)\=[-#0 +]*\d*\(\.\d\+\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString,pythonFormatString,pythonFormatRawString
+  syn match pythonStrFormatting "%[-#0 +]*\(\*\|\d\+\)\=\(\.\(\*\|\d\+\)\)\=[hlL]\=[diouxXeEfFgGcrs%]" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString,pythonFormatString,pythonFormatRawString
 endif
 
 if exists("python_highlight_string_format") && python_highlight_string_format != 0
   " str.format syntax
-  syn match pythonStrFormat "{{\|}}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
-  syn match pythonStrFormat "{\([a-zA-Z_][a-zA-Z0-9_]*\|\d\+\)\(\.[a-zA-Z_][a-zA-Z0-9_]*\|\[\(\d\+\|[^!:\}]\+\)\]\)*\(![rs]\)\=\(:\({\([a-zA-Z_][a-zA-Z0-9_]*\|\d\+\)}\|\([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*\(\.\d\+\)\=[bcdeEfFgGnoxX%]\=\)\=\)\=}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+  syn match pythonStrFormat "{{\|}}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString,pythonFormatString,pythonFormatRawString
+  syn match pythonStrFormat "{\([a-zA-Z_][a-zA-Z0-9_]*\|\d\+\)\(\.[a-zA-Z_][a-zA-Z0-9_]*\|\[\(\d\+\|[^!:\}]\+\)\]\)*\(![rs]\)\=\(:\({\([a-zA-Z_][a-zA-Z0-9_]*\|\d\+\)}\|\([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*\(\.\d\+\)\=[bcdeEfFgGnoxX%]\=\)\=\)\=}" contained containedin=pythonString,pythonUniString,pythonRawString,pythonUniRawString,pythonFormatString,pythonFormatRawString
 endif
 
 if exists("python_highlight_string_templates") && python_highlight_string_templates != 0
@@ -306,7 +318,7 @@ else
   syn sync maxlines=200
 endif
 
-syn cluster pythonStringType contains=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+syn cluster pythonStringType contains=pythonString,pythonUniString,pythonRawString,pythonUniRawString,pythonFormatString,pythonFormatRawString
 syn cluster pythonNumberType contains=pythonNumber,pythonHexNumber,pythonFloat
 syn cluster pythonBuiltin    contains=pythonBuiltinObj,pythonBuiltinFunc
 
@@ -355,6 +367,8 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonUniString    String
   HiLink pythonRawString    String
   HiLink pythonUniRawString String
+  HiLink pythonFormatString String
+  HiLink pythonFormatRawString String
 
   HiLink pythonEscape           Special
   HiLink pythonEscapeError      Error
